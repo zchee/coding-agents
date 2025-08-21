@@ -32,4 +32,4 @@
 
 # Go programming language
 
-@include ./instructions/Go.md
+@include ./instructions/go/Go.md
