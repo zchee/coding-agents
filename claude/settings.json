@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "cleanupPeriodDays": 365,
+  "includeCoAuthoredBy": false,
+  "permissions": {
+    "allow": [
+      "TodoWrite"
+    ],
+    "deny": [
+      "Read(third_party)",
+      "Read(_tmp)",
+      "Read(.ruff_cache)",
+      "Read(.venv)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path | select(endswith(\".go\"))' | xargs -r -I {} sh -c 'gofmt -s -w \"$1\" && goimports -w \"$1\"' _ {}"
+          },
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path | select(endswith(\".tf\"))' | xargs -r -I {} sh -c 'terraform fmt \"$1\"' _ {}"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Applications/claude-terminal-notifier.app/Contents/MacOS/terminal-notifier -title 'Claude Code' -sender com.anthropic.claudefordesktop -message 'Done task'"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.py",
+    "padding": 0
+  },
+  "forceLoginMethod": "console",
+  "outputStyle": "default",
+  "alwaysThinkingEnabled": false
+}

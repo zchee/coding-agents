@@ -15,9 +15,9 @@ Remember:
 ## General Rules
 
 * **MUST use the latest version of the Go language currently available.**
-    - Use at least 1.24 or higher.
+    - Use at least 1.25 or higher.
 * **MUST respect the Google Go Style Guide:**
-    - @include ../../llmstxt/google.github.io-styleguide-go-llms-full.txt
+    - @./llmstxt/google.github.io-styleguid-go.xml
 * **MUST use `any` instead of `interface{}`.**
 * **MUST use generic types when it makes sense.**
 * **MUST follow Go formatting with `gofmt -s -w .`**
@@ -43,7 +43,7 @@ If the task is unreasonable or infeasible, or if any of the tests are incorrect,
 Here are some code-level rules:
 
 * Please write beneficial test code that shows common patterns in the Go language, referencing:
-    - @include ./code-coverage-best-practices.md
+    - @./code-coverage-best-practices.md
 - Use `github.com/google/go-cmp/cmp` for test assertions.
     - Don't use `github.com/stretchr/testify`.
 - For tests that require an API key, make an actual API call.
