@@ -47,6 +47,8 @@ remote_models = true
 parallel = true
 warnings = true
 skills = true
+shell_snapshot = true
+tui2 = true
 
 [notice]
 hide_full_access_warning = true
