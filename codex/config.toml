@@ -1,0 +1,191 @@
+#:schema https://raw.githubusercontent.com/zchee/schema/refs/heads/main/codex.schema.json
+
+model = "gpt-5.1-codex-max"
+review_model = "gpt-5.1-codex-max"
+model_context_window = 400000 # default: 272000
+project_doc_max_bytes = 46080 # default: 32768
+project_doc_fallback_filenames = ["AGENTS.md", "CLAUDE.md", "GEMINI.md"]
+hide_agent_reasoning = false # default
+show_raw_agent_reasoning = false
+model_reasoning_effort = "xhigh"
+model_reasoning_summary = "detailed"
+model_verbosity = "high"
+model_supports_reasoning_summaries = true
+model_reasoning_summary_format = "experimental"
+check_for_update_on_startup = false
+# forced_login_method = "chatgpt"
+
+# instructions = ""
+
+# Stop being nice, and it's the best thing
+# - https://www.reddit.com/r/PromptEngineering/comments/1okppqe/comment/nme6p95
+developer_instructions = """From now on, act as my high-level strategic collaborator — not a cheerleader, not a tyrant. Challenge my assumptions and thinking when needed, but always ground your feedback in real-world context, logic, and practicality. Speak with clarity and candor, but with emotional intelligence — direct, not harsh.
+
+When you disagree, explain why and offer a better-reasoned alternative or a sharper question that moves us forward.
+
+Focus on synthesis and impact — help me see the forest and the path through it. Every response should balance: • Truth — objective analysis without sugar-coating. • Nuance — awareness of constraints, trade-offs, and context. • Action — a prioritized next step or strategic recommendation.
+
+Treat me as an equal partner in the process. The goal is not to win arguments but to produce clarity, traction, and progress."""
+
+[shell_environment_policy]
+inherit = "all" # inherit can be "all" (default), "core", or "none"
+experimental_use_profile = false
+
+[tui]
+notifications = true
+animations = true
+
+[features]
+shell_tool = true
+unified_exec = true
+rmcp_client = true
+apply_patch_freeform = true
+web_search_request = true
+exec_policy = true
+# experimental_sandbox_command_assessment = true
+remote_models = true
+parallel = true
+warnings = true
+skills = true
+
+[notice]
+hide_full_access_warning = true
+hide_gpt5_1_migration_prompt = true
+hide_rate_limit_model_nudge = false
+hide_world_writable_warning = false
+
+# Model providers / Profiles
+
+[model_providers.xai]
+name = "xAI"
+base_url = "https://api.x.ai/v1"
+env_key = "XAI_API_KEY"
+
+[profiles.xai]
+model_provider = "xai"
+model = "grok-4-1-fast-reasoning" # model = "grok-code-fast-1"
+
+# TODO(zchee): not working yet.
+# [model_providers.gemini]
+# name = "Gemini"
+# base_url = "http://localhost:5555/v1"
+#
+# [profiles.gemini]
+# model_provider = "gemini"
+# model = "gemini-3-pro-preview"
+
+[model_providers.openrouter]
+name = "OpenRouter"
+base_url = "https://openrouter.ai/api/v1"
+env_key = "OPENROUTER_API_KEY"
+
+[profiles.gpt-5-pro]
+model_provider = "openrouter"
+model = "openai/gpt-5-pro"
+
+[profiles.claude]
+model_provider = "openrouter"
+model = "anthropic/claude-sonnet-4.5"
+
+[profiles.openrouter]
+model_provider = "openrouter"
+model = "openrouter/sherlock-think-alpha"
+
+# MCP
+
+[mcp_servers.aws-knowledge]
+enabled = false
+url = "https://knowledge-mcp.global.api.aws"
+
+[mcp_servers.aws-documentation]
+enabled = false
+command = "uvx"
+args = ["awslabs.aws-documentation-mcp-server@latest"]
+
+# https://github.com/zchee/mcp-servers/tree/main/apple-docs
+[mcp_servers.apple-docs]
+enabled = false
+command = "uv"
+args = ["run", "--directory=/Users/zchee/go/src/github.com/zchee/mcp-servers/apple-docs", "apple-docs"]
+
+[mcp_servers.gopls]
+enabled = true
+command = "gopls"
+args = ["mcp"]
+
+[mcp_servers.basedpyright]
+enabled = false
+command = "mcp-language-server"
+args = ["--workspace", ".", "--lsp", "basedpyright-langserver", "--", "--stdio"]
+
+[mcp_servers.tsgo]
+enabled = false
+command = "mcp-language-server"
+args = ["--workspace", ".", "--lsp", "tsgo", "--", "--lsp", "--stdio"]
+
+[mcp_servers.lua_ls]
+enabled = false
+command = "mcp-language-server"
+args = ["--workspace", ".", "--lsp", "lua-language-server"]
+
+[mcp_servers.clangd]
+enabled = false
+command = "mcp-language-server"
+args = [
+  "--workspace",
+  ".",
+  "--lsp",
+  "/opt/llvm/clangd/bin/clangd",
+  "--",
+  "--background-index",
+  "--background-index-priority=normal",
+  "--all-scopes-completion",
+  "--background-index",
+  "--background-index-priority=normal",
+  "--clang-tidy",
+  "--completion-parse=auto",
+  "--completion-style=detailed",
+  "--experimental-modules-support",
+  "--function-arg-placeholders=1",
+  "--header-insertion=iwyu",
+  "--header-insertion-decorators",
+  "--import-insertions",
+  "--include-ineligible-results",
+  "--limit-references=0",
+  "--limit-results=0",
+  "--ranking-model=heuristics",
+  "--rename-file-limit=1000",
+  "--enable-config",
+  "-j=16",
+  "--parse-forwarding-functions",
+  "--pch-storage=memory",
+  "--use-dirty-headers",
+  "--input-style=standard",
+]
+
+[mcp_servers.filesystem]
+command = "rust-mcp-filesystem"
+args = ["--allow-write", "/Users/zchee"]
+
+[mcp_servers.gemini-google-search]
+command = "npx"
+args = ["-y", "mcp-gemini-google-search@latest"]
+env_vars = ["GEMINI_API_KEY", "GEMINI_MODEL"]
+
+# TODO(zchee): investigate exec_policy
+# [mcp_servers.execshell]
+# enabled = true
+# command = "node"
+# args = ["/opt/local/var/bun/install/global/node_modules/@openai/codex-shell-tool-mcp/bin/mcp-server.js"]
+
+[mcp_servers.codex]
+command = "codex"
+args = ["mcp-server"]
+
+[mcp_servers.context7]
+url = "https://mcp.context7.com/mcp"
+env_http_headers = { "CONTEXT7_API_KEY" = "CONTEXT7_API_KEY" }
+
+# https://github.com/zchee/mcp-servers/tree/main/sequential-thinking
+[mcp_servers.sequential-thinking]
+command = "sequential-thinking"
