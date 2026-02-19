@@ -1,8 +1,5 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
-  "model": "opus[1m]",
-  "effortLevel": "high",
-  "alwaysThinkingEnabled": true,
   "cleanupPeriodDays": 99999,
   "includeCoAuthoredBy": true,
   "permissions": {
@@ -21,13 +18,8 @@
       "~/go/src"
     ]
   },
+  "model": "opus[1m]",
   "enableAllProjectMcpServers": true,
-  "forceLoginMethod": "console",
-  "outputStyle": "default",
-  "spinnerTipsEnabled": true,
-  "autoUpdatesChannel": "latest",
-  "skipDangerousModePermissionPrompt": true,
-  "fastMode": true,
   "hooks": {
     "PostToolUse": [
       {
@@ -59,5 +51,16 @@
     "type": "command",
     "command": "pnpx ccstatusline@latest",
     "padding": 1
-  }
+  },
+  "enabledPlugins": {
+    "gopls-lsp@claude-plugins-official": true
+  },
+  "forceLoginMethod": "console",
+  "outputStyle": "default",
+  "spinnerTipsEnabled": true,
+  "alwaysThinkingEnabled": true,
+  "fastMode": true,
+  "teammateMode": "tmux",
+  "autoUpdatesChannel": "latest",
+  "skipDangerousModePermissionPrompt": true
 }
