@@ -16,7 +16,7 @@ Remember:
 * **MUST use the latest version of the Go language currently available.**
     - Use at least 1.25 or higher.
 * **MUST respect the Google Go Style Guide:**
-    - @~/.agent/llms/google.github.io-styleguid-go.xml
+    - @./llms/google.github.io-styleguid-go.xml
 * **MUST use `any` instead of `interface{}`.**
 * **MUST use generic types when it makes sense.**
 * **MUST follow Go formatting with `gofmt -s -w .`**
