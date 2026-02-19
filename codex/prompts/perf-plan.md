@@ -1,14 +1,14 @@
 ---
 description: Investigate major performance improvements using the $LSP MCP server
-argument-hint: [LSP="<LSP server>"] [SCOPE="<service-or-module>"] [FOCUS="<latency|throughput|memory|cpu|io>"]
+argument-hint: [LSP="<LSP server>"] [FOCUS="<latency|throughput|memory|cpu|io|all>"] [SCOPE="<service-or-module>"]
 ---
 You are helping improve performance in this repository.
 
 Inputs (from slash-command arguments):
 
 - LSP: $LSP (required). LSP server name.
+- FOCUS: $FOCUS (optional). When provided, treat this as the primary performance dimension (for example: latency, throughput, memory, CPU I/O, or all).
 - SCOPE: $SCOPE (optional). When provided, limit your analysis and plan to this service, module, or subsystem.
-- FOCUS: $FOCUS (optional). When provided, treat this as the primary performance dimension (for example: latency, throughput, memory, CPU, or I/O).
 
 If either argument is omitted, infer a reasonable scope or performance focus from the repository and conversation.
 
@@ -18,8 +18,11 @@ Goals:
 - Ensure that all proposed and implemented changes **preserve existing API contracts** unless the user explicitly approves breaking changes.
 
 Requirements:
+- **MUST USE `ExecPlan`**
+  - **MUST BE implemented all tasks continuously without stopping.**
 - Always use the $LSP MCP server for code navigation, symbol references, and static analysis when investigating performance issues and candidate changes.
 - Treat `./.agent/PLANS.md` as the **long-term plan and memory** for this performance work:
+  - MUST save and restore from .agent/PLANS.md
   - **Before** drafting or updating the implementation plan, read `./.agent/PLANS.md` and restore your understanding of prior decisions, current $SCOPE, and $FOCUS.
   - **After** making significant design decisions or changes to the implementation plan, update `./.agent/PLANS.md` with:
     - the current values of $SCOPE and $FOCUS (or that they were inferred),
@@ -35,7 +38,8 @@ When you respond:
 5. Describe how you updated `./.agent/PLANS.md` so that future runs can resume from the latest plan.
 
 For the Go language:
+* Take a benchmark using `sync; /usr/local/sbin/purge; go test -v -run='^$' -timeout (N) -count (N) -benchtime (N)x -benchmem -bench={TARGET_BENCHMARK_NAME} ./...`
 * Before optimizing, run benchmarks against existing code and measure the difference with the `benchstat` command.
-    * If performance degrades, consider a different approach or revert the changes if none exist.
-
-$ARGUMENTS
+  - Use the `git stash ...` command if needed
+  - If performance degrades, consider a different approach or revert the changes if none exist.
+* If have `benchstat` result, including to commit message
