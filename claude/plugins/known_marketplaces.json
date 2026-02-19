@@ -1,0 +1,18 @@
+{
+  "claude-plugins-official": {
+    "source": {
+      "source": "github",
+      "repo": "anthropics/claude-plugins-official"
+    },
+    "installLocation": "/Users/zchee/.claude/plugins/marketplaces/claude-plugins-official",
+    "lastUpdated": "2026-02-19T20:31:29.793Z"
+  },
+  "knowledge-work-plugins": {
+    "source": {
+      "source": "github",
+      "repo": "anthropics/knowledge-work-plugins"
+    },
+    "installLocation": "/Users/zchee/.claude/plugins/marketplaces/knowledge-work-plugins",
+    "lastUpdated": "2026-02-18T12:36:57.685Z"
+  }
+}

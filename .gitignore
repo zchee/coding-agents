@@ -2,3 +2,6 @@
 #  if you want to ignore files created by your editor/tools,
 #  please consider a global .gitignore https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
 #  please do not open a pull request to add something created by your editor or tools
+
+# Claude
+claude/plugins/marketplaces/
