@@ -1,7 +1,10 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
-  "cleanupPeriodDays": 365,
-  "includeCoAuthoredBy": false,
+  "model": "opus[1m]",
+  "effortLevel": "high",
+  "alwaysThinkingEnabled": true,
+  "cleanupPeriodDays": 99999,
+  "includeCoAuthoredBy": true,
   "permissions": {
     "allow": [
       "TodoWrite"
@@ -11,16 +14,28 @@
       "Read(_tmp)",
       "Read(.ruff_cache)",
       "Read(.venv)"
+    ],
+    "defaultMode": "dontAsk",
+    "additionalDirectories": [
+      "~/src",
+      "~/go/src"
     ]
   },
+  "enableAllProjectMcpServers": true,
+  "forceLoginMethod": "console",
+  "outputStyle": "default",
+  "spinnerTipsEnabled": true,
+  "autoUpdatesChannel": "latest",
+  "skipDangerousModePermissionPrompt": true,
+  "fastMode": true,
   "hooks": {
     "PostToolUse": [
       {
-        "matcher": "Write|Edit|MultiEdit",
+        "matcher": "Edit|Write|MultiEdit",
         "hooks": [
           {
             "type": "command",
-            "command": "jq -r '.tool_input.file_path | select(endswith(\".go\"))' | xargs -r -I {} sh -c 'gofmt -s -w \"$1\" && goimports -w \"$1\"' _ {}"
+            "command": "jq -r '.tool_input.file_path | select(endswith(\".go\"))' | xargs -r -I {} sh -c 'gofmt -s -w \"$1\"' _ {}"
           },
           {
             "type": "command",
@@ -29,12 +44,12 @@
         ]
       }
     ],
-    "Stop": [
+    "Notification": [
       {
         "hooks": [
           {
             "type": "command",
-            "command": "/Applications/claude-terminal-notifier.app/Contents/MacOS/terminal-notifier -title 'Claude Code' -sender com.anthropic.claudefordesktop -message 'Done task'"
+            "command": "jq -r '.message' | xargs -r -I {} sh -c '/Applications/claude-terminal-notifier.app/Contents/MacOS/terminal-notifier -title 'Claude Code' -sender 'com.anthropic.claudefordesktop' -message \"$1\"' _ {}"
           }
         ]
       }
@@ -42,10 +57,7 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "~/.claude/statusline.py",
-    "padding": 0
-  },
-  "forceLoginMethod": "console",
-  "outputStyle": "default",
-  "alwaysThinkingEnabled": false
+    "command": "pnpx ccstatusline@latest",
+    "padding": 1
+  }
 }
