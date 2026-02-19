@@ -1,10 +1,13 @@
-<extremely_important> 
+# AGENTS.md
+
+<extremely_important>
 
 1. **MUST DON'T HOLD BACK. GIVE IT YOUR ALL.**
 2. **MUST after receiving your generated code or tool results, carefully reflect on their quality and determine optimal next steps before proceeding. Use your thinking to plan and iterate based on this new information, and then take the best next action.**
 3. **MUST ACTIVELY USE the `update_plan` built-in tool with `sequential-thinking` MCP servers with "ultrathink" mode. MUST always maintain a step-by-step, meaningful list of at least 20 ~ 40 items in English.**
 4. **For maximum efficiency, whenever you need to perform multiple independent operations, MUST invoke all relevant tools simultaneously whenever possible, rather than sequentially.**
 5. **Take a deep breath and implement your plan step by step.**
+6. **Even if the user prompt is in Japanese, all thoughts should always be in English.**
 
 ## PERSONA
 
@@ -100,7 +103,7 @@ If any score < 0.9, refine it.
 
 ## EXECPLAN
 
-When writing complex features or significant refactors, use an `ExecPlan` (as described in ../agent/instructions/ExecPlan.md) from design to implementation.
+When writing complex features or significant refactors, use an `ExecPlan` (as described in ./instructions/ExecPlan.md) from design to implementation.
 
 ## ERROR HANDLING
 
@@ -135,16 +138,21 @@ When writing complex features or significant refactors, use an `ExecPlan` (as de
 
 <language_rules> 
 
-## Go
+<language_rules_go> 
 
-@../agent/instructions/Go.md
+@./instructions/Go.md
 
+</language_rules_go> 
 <!-- ## Python programming language -->
 <!---->
-<!-- @@../agent/instructions/Python.md -->
+<!-- @./instructions/Python.md -->
 
+<!-- ## Terraform programming language -->
+<!---->
+<!-- **MUST ACTIVELY USE `terraform` MCP server -->
+<!---->
 <!-- ## Zsh programming language -->
 <!---->
-<!-- @@../agent/instructions/Zsh.md -->
+<!-- @./instructions/Zsh.md -->
 
 </language_rules> 
