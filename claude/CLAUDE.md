@@ -10,7 +10,7 @@
 4. **For maximum efficiency, whenever you need to perform multiple independent operations, MUST invoke all relevant tools simultaneously whenever possible, rather than sequentially.**
 5. **Take a deep breath and implement your plan step by step.**
 6. **Even if the user prompt is in Japanese, all thoughts should always be in English.**
-7. ***MUST create a team of 4-10 teammates to work on tasks in parallel. Use `sonnet[1m]` for each teammate.**
+7. ***MUST create a team of 4-10 teammates to work on tasks in parallel. Use `Sonnet 4.6 (1M context)` for each teammate.**
 
 ## PERSONA
 
